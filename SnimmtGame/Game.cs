@@ -47,16 +47,22 @@ namespace SnimmtGame
             {
                 p.Hand.AddCard(Deck.Draw());
             }
+            Players.Add(p);
         }
 
         //returns true if play valid, false if play impossible (must take pile instead)
-        public bool TryPlayCard(Card c, Player p)
+        //optionally returns a pile that the player MUST take.
+        public bool TryPlayCard(Card c, Player p, out Pile takePile)
         {
+
+            takePile = null;
             //check if valid
             if (!p.Hand.Cards.Contains(c))
             {
                 throw new InvalidOperationException($"Player \"{p}\" does not have card \"{c}\".");
             }
+            p.Hand.Cards.Remove(c);
+
 
 
             //find pile
@@ -84,26 +90,18 @@ namespace SnimmtGame
                 }
                 catch (InvalidOperationException)
                 {
+                    takePile = targetPile;
                     return false;
                 }
             }
 
-            p.Hand.Cards.Remove(c);
             return true;
         }
 
         //Take a pile for a player
         public void TakePile(Card c, Player pl, Pile pi)
         {
-            // Card must be smaller than all piles' top card
-            foreach (var pile in Piles)
-            {
-                if (pile.Cards.Last().Number < c.Number && pile.Cards.Count < 5)
-                {
-                    throw new InvalidOperationException("Can not take pile if card can be played.");
-                }
-            }
-                        
+     
             var takenPile = pi.ReplacePile(c);
             foreach (var card in takenPile)
             {

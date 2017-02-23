@@ -54,6 +54,10 @@
       <Project>{4ADBD506-CAE3-4219-BEFB-3BD056B01B10}</Project>
       <Name>SnimmtGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SnimmtPlugin\SnimmtPlugin.csproj">
+      <Project>{742C2727-146C-460A-A512-D66E4921C194}</Project>
+      <Name>SnimmtPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

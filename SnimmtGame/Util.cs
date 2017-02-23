@@ -37,7 +37,7 @@ namespace SnimmtGame
 
         public static Card Draw(this IList<Card> deck)
         {
-            var i = deck.Count;
+            var i = deck.Count - 1;
             var card = deck[i];
             deck.RemoveAt(i);
             return card;

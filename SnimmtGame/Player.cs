@@ -21,6 +21,7 @@ namespace SnimmtGame
         public Player()
         {
             takenCards = new List<Card>();
+            Hand = new Hand();
         }
 
         public Player(string name) : this()

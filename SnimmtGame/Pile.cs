@@ -37,16 +37,18 @@ namespace SnimmtGame
                 throw new ArgumentException("Invalid card for this pile.");
             }
 
-            Cards.Add(card);
+            cards.Add(card);
         }
 
         internal IList<Card> ReplacePile(Card c)
         {
             var oldCards = cards;
             cards = new List<Card>();
-            AddCard(c);
+            cards.Add(c);
 
             return oldCards;
         }
+
+        public override string ToString() => $"Pile: [{string.Join(",", cards)}]";
     }
 }
