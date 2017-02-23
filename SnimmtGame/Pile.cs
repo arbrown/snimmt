@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace SnimmtGame
 {
-    class Pile
+    public class Pile
     {
-        public IList<Card> Cards { get; }
+        public IList<Card> Cards => cards.Select(c => c).ToList();
         public int BullValue => Cards.Sum(c => c.BullValue);
+
+        private IList<Card> cards;
 
         public Pile()
         {
-            Cards = new List<Card>();
+            cards = new List<Card>();
         }
 
-        public void AddCard(Card card)
+        public Pile(Card card) : this()
+        {
+            cards.Add(card);
+        }
+
+        internal void AddCard(Card card)
         {
             if (Cards.Count >= 5)
             {
@@ -31,6 +38,15 @@ namespace SnimmtGame
             }
 
             Cards.Add(card);
+        }
+
+        internal IList<Card> ReplacePile(Card c)
+        {
+            var oldCards = cards;
+            cards = new List<Card>();
+            AddCard(c);
+
+            return oldCards;
         }
     }
 }

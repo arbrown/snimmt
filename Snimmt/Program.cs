@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SnimmtGame;
 
 namespace Snimmt
 {
@@ -10,6 +6,12 @@ namespace Snimmt
     {
         static void Main(string[] args)
         {
+            var game = new Game();
+
+            foreach (var player in game.Players)
+            {
+                var h = game.GetPlayerHand(player);
+            }
         }
     }
 }

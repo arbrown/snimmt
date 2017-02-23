@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SnimmtGame
 {
-    class Util
+    public static class Util
     {
         public static int BullValue(int number)
         {
@@ -18,5 +18,33 @@ namespace SnimmtGame
             throw new ArgumentException("6 Nimmt! numbers must be between 1 and 104.");
 
         }
+
+        //Fisher-Yates Shuffle
+        public static void Shuffle(this IList<Card> deck)
+        {
+            var rand = new Random();
+
+            int n = deck.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rand.Next(n + 1);
+                Card value = deck[k];
+                deck[k] = deck[n];
+                deck[n] = value;
+            }
+        }
+
+        public static Card Draw(this IList<Card> deck)
+        {
+            var i = deck.Count;
+            var card = deck[i];
+            deck.RemoveAt(i);
+            return card;
+        }
     }
+
+
+
+
 }
