@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snimmt", "Snimmt\Snimmt.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnimmtTest", "SnimmtTest\SnimmtTest.csproj", "{FF6F17B4-B3C3-4112-8323-33437F265744}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnimmtReference", "SnimmtReference\SnimmtReference.csproj", "{6F027AE4-1D3A-4680-A37D-DA8A4A43059D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FF6F17B4-B3C3-4112-8323-33437F265744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF6F17B4-B3C3-4112-8323-33437F265744}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF6F17B4-B3C3-4112-8323-33437F265744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F027AE4-1D3A-4680-A37D-DA8A4A43059D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F027AE4-1D3A-4680-A37D-DA8A4A43059D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F027AE4-1D3A-4680-A37D-DA8A4A43059D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F027AE4-1D3A-4680-A37D-DA8A4A43059D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
