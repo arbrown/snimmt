@@ -9,7 +9,7 @@ namespace SnimmtGame
     public class GameState
     {
         public ICollection<Player> Players => Game.Players;
-        public ICollection<Pile> Piles => Game.Piles;
+        public ICollection<Pile> Piles => Game.Piles.ToList();
         public ShuffleStrategy ShuffleStrategy => Game.ShuffleStrategy;
 
         private Game Game { get; set; }

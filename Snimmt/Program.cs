@@ -88,7 +88,6 @@ namespace Snimmt
 
             // TODO: move game logic to game class
 
-
             // Real game loop
             // Just play a round
             for (var i = 0; i < 10; i++)
