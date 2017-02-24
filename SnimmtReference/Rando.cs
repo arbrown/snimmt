@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SnimmtGame.Events;
 
 namespace SnimmtReference
 {
@@ -14,17 +15,14 @@ namespace SnimmtReference
 
         public GameState State { get; set; }
 
+        private StringBuilder log { get; set; } = new StringBuilder();
+
         private Random rand { get; set; } = new Random();
         public IList<Card> Hand { get; set; }
 
         public Rando()
         {
             Hand = new List<Card>();
-        }
-
-        public void ObservePlayerCard(Player player, Card card)
-        {
-            // lol, I don't care!
         }
 
         public Pile PickPile()
@@ -41,7 +39,7 @@ namespace SnimmtReference
             return card;
         }
 
-        public void RegisterGameState(GameState gameState)
+        public void ReceiveGameState(GameState gameState)
         {
             this.State = gameState;
         }
@@ -49,6 +47,18 @@ namespace SnimmtReference
         public void SetHand(Hand hand)
         {
             Hand = hand.Cards.ToList();
+        }
+
+        public void Register(EventManager eventManager)
+        {
+
+            // Just register for an event
+            eventManager.Register<PlayerCardEvent>(pce =>
+            {
+                Console.WriteLine($"Today's Lottery Numbers are {pce.Card.Number}, {pce.Card.BullValue}, and {rand.Next()}");
+                log.Append($"I observed \"{pce.Player} take the card \"{pce.Card}\"\"");
+                });
+
         }
     }
 }

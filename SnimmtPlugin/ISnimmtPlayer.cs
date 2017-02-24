@@ -11,17 +11,31 @@ namespace SnimmtPlugin
     {
         /// <summary>
         /// Returns the name of this Snimmt player
+        /// This property should be able to identify
+        /// an AI before any other preparation /
+        /// initialization has been done in Register()
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Receive the GameState object from the game control
+        /// Register for the game.
+        /// This is the function in which any memory allocation or 
+        /// general preparations should occur.  The constructor
+        /// should be pretty much empty.
         /// </summary>
-        /// <param name="gameState">The game state object that can be used to observe the game</param>
-        void RegisterGameState(GameState gameState);
+        /// <param name="eventManager">Game Manager object used to register for events</param>
+        void Register(EventManager eventManager);
 
         /// <summary>
-        /// Receive a hand from the game control
+        /// Receive the GameState object from the game control.
+        /// This object will be used to track the game as it proceeds, and
+        /// will be passed after all other AIs have registered for the game.
+        /// </summary>
+        /// <param name="gameState">The game state object that can be used to observe the game</param>
+        void ReceiveGameState(GameState gameState);
+
+        /// <summary>
+        /// Receive the starting hand from the game control
         /// </summary>
         /// <param name="hand">The player's new hand</param>
         void SetHand(Hand hand);
@@ -37,19 +51,6 @@ namespace SnimmtPlugin
         /// </summary>
         /// <returns>The chosen pile</returns>
         Pile PickPile();
-
-        /// <summary>
-        /// Observe the fact that a player played a card
-        /// </summary>
-        /// <param name="player">The player who just flipped over a card</param>
-        /// <param name="card">The card the player played</param>
-        void ObservePlayerCard(Player player, Card card);
-        // Maybe this would be better as a callback that the plugin registers either during RegisterGameState or a completely different Register method...
-        // Especially if there are other potential 'events' an AI might want to know, but are not included in here yet...  That way I don't need
-        // to burden down the interface with a bunch of unnecessary methods...
-
-
-
 
     }
 }

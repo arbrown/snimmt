@@ -12,6 +12,7 @@ namespace SnimmtGame
         public IList<Card> Deck { get; set; }
 
         public ShuffleStrategy ShuffleStrategy { get; set; } = ShuffleStrategy.CycleCardsToBottom;
+        public EventManager EventManager { get; set; }
 
         public Game()
         {
@@ -48,6 +49,7 @@ namespace SnimmtGame
                 p.Hand.AddCard(Deck.Draw());
             }
             Players.Add(p);
+
         }
 
         //returns true if play valid, false if play impossible (must take pile instead)

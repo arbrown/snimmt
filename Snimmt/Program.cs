@@ -1,4 +1,5 @@
 ﻿using SnimmtGame;
+using SnimmtGame.Events;
 using SnimmtPlugin;
 using System;
 using System.Collections.Generic;
@@ -62,13 +63,15 @@ namespace Snimmt
             var ai1 = (ISnimmtPlayer)Activator.CreateInstance(plugins.First());
             var ai2 = (ISnimmtPlayer)Activator.CreateInstance(plugins.First());
 
-            var game = new Game();
+            var game = new Game() { EventManager = new EventManager() };
 
             var aiDict = new Dictionary<Player, ISnimmtPlayer>();
             var p1 = new Player($"{ai1} 1");
             var p2 = new Player($"{ai2} 2");
             aiDict.Add(p1, ai1);
+            ai1.Register(game.EventManager);
             aiDict.Add(p2, ai2);
+            ai2.Register(game.EventManager);
 
             game.AddPlayer(p1);
             game.AddPlayer(p2);
@@ -79,7 +82,7 @@ namespace Snimmt
             foreach (var player in game.Players)
             {
                 var ai = aiDict[player];
-                ai.RegisterGameState(gameState);
+                ai.ReceiveGameState(gameState);
                 var hand = game.GetPlayerHand(player);
                 ai.SetHand(hand);
             }
@@ -102,15 +105,12 @@ namespace Snimmt
                     playerCards[player] = card;
                 }
 
-                //Now tell each player
-                foreach (var player in game.Players)
+                //Now tell the players that care
+                foreach (var pc in playerCards)
                 {
-                    var ai = aiDict[player];
-                    foreach(var pc in playerCards)
-                    {
-                        ai.ObservePlayerCard(pc.Key, pc.Value);
-                    }
+                    game.EventManager.Broadcast(new PlayerCardEvent() { Player = pc.Key, Card = pc.Value });
                 }
+
 
                 //Now play each card in order
                 foreach (var pc in playerCards.OrderBy(kvp => kvp.Value.Number))
