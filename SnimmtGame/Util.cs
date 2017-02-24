@@ -44,6 +44,4 @@ namespace SnimmtGame
             return card;
         }
     }
-
-
 }

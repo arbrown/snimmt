@@ -12,17 +12,6 @@ namespace SnimmtGame
 
         private MultiValueDictionary<Type, Action<IEvent>> Events { get; set; } = new MultiValueDictionary<Type, Action<IEvent>>();
 
-
-
-        private ICollection<Action<PlayerCardEvent>> PlayerCardCallbacks {get; set;} = new HashSet<Action<PlayerCardEvent>>();
-        private ICollection<Action<PlayerTookPileEvent>> PlayerTookPileCallbacks { get; set; } = new HashSet<Action<PlayerTookPileEvent>>();
-
-
-        public EventManager()
-        {
-
-        }
-
         public void Register<T>(Action<T> action) where T:IEvent
         {
             var type = typeof(T);

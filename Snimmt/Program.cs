@@ -86,10 +86,7 @@ namespace Snimmt
                 ai.SetHand(hand);
             }
 
-
-
-
-
+            // TODO: move game logic to game class
 
 
             // Real game loop
@@ -122,9 +119,6 @@ namespace Snimmt
             }
 
             game.ScoreRound();
-
-
-
 
         }
     }

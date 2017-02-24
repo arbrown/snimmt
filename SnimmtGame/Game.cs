@@ -155,7 +155,5 @@ namespace SnimmtGame
 
         }
 
-
-
     }
 }
