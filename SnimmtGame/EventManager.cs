@@ -19,14 +19,17 @@ namespace SnimmtGame
             Events.Add(type, castAction);
         }
 
-        public void Broadcast<T>(T e) where T:IEvent
+        internal void Broadcast<T>(T e) where T:IEvent
         {
             var type = typeof(T);
-            var actions = Events[type];
+            IReadOnlyCollection<Action<IEvent>> actions;
 
-            foreach (var action in actions)
+            if (Events.TryGetValue(type, out actions))
             {
-                action(e);
+                foreach (var action in actions)
+                {
+                    action(e);
+                }
             }
         }
     }
