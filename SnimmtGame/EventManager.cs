@@ -40,29 +40,5 @@ namespace SnimmtGame
                 action(e);
             }
         }
-
-
-        public void RegisterPlayerCardCallback(Action<PlayerCardEvent> callback) => PlayerCardCallbacks.Add(callback);
-        public void RegisterPlayerTookPileCallback(Action<PlayerTookPileEvent> callback) => PlayerTookPileCallbacks.Add(callback);
-
-        internal void BroadcastPlayerCardCallbacks(Player player, Card card)
-        {
-            var e = new PlayerCardEvent { Player = player, Card = card };
-            foreach (var action in PlayerCardCallbacks)
-            {
-                action(e);
-            }
-        }
-
-        internal void BroadcastPlayerTookPileCallbacks(Player player, Card card)
-        {
-            var e = new PlayerCardEvent { Player = player, Card = card };
-            foreach (var action in PlayerCardCallbacks)
-            {
-                action(e);
-            }
-        }
-
-
     }
 }
