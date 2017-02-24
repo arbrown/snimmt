@@ -1,4 +1,5 @@
 ﻿using SnimmtGame;
+using SnimmtGame.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,8 @@ namespace SnimmtGame
             }
             p.Hand.Cards.Remove(c);
 
+            //Player has now played the card
+            EventManager.Broadcast(new PlayerCardEvent() { Player = pc.Key, Card = pc.Value });
 
 
             //find pile
@@ -103,12 +106,15 @@ namespace SnimmtGame
         //Take a pile for a player
         public void TakePile(Card c, Player pl, Pile pi)
         {
-     
+            // Notify others before the pile is actually taken
+            EventManager.Broadcast(new PlayerTookPileEvent() { NewCard = c, Player = pl, Pile = pi });
+                 
             var takenPile = pi.ReplacePile(c);
             foreach (var card in takenPile)
             {
                 pl.Take(card);
             }
+
         }
 
         // Get player hand to expose it to AI when necessary

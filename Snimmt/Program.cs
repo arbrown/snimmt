@@ -105,13 +105,6 @@ namespace Snimmt
                     playerCards[player] = card;
                 }
 
-                //Now tell the players that care
-                foreach (var pc in playerCards)
-                {
-                    game.EventManager.Broadcast(new PlayerCardEvent() { Player = pc.Key, Card = pc.Value });
-                }
-
-
                 //Now play each card in order
                 foreach (var pc in playerCards.OrderBy(kvp => kvp.Value.Number))
                 {
