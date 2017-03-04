@@ -13,7 +13,7 @@ namespace SnimmtGame
         public IList<Card> Deck { get; set; }
 
         public ShuffleStrategy ShuffleStrategy { get; set; } = ShuffleStrategy.CycleCardsToBottom;
-        public EventManager EventManager { get; set; }
+        public EventDispatcher EventDispatcher { get; set; }
 
         public Game()
         {
@@ -67,7 +67,7 @@ namespace SnimmtGame
             p.Hand.Cards.Remove(c);
 
             //Player has now played the card
-            EventManager.Broadcast(new PlayerCardEvent() { Player = p, Card = c });
+            EventDispatcher.Broadcast(new PlayerCardEvent() { Player = p, Card = c });
 
 
             //find pile
@@ -107,7 +107,7 @@ namespace SnimmtGame
         public void TakePile(Card c, Player pl, Pile pi)
         {
             // Notify others before the pile is actually taken
-            EventManager.Broadcast(new PlayerTookPileEvent() { NewCard = c, Player = pl, Pile = pi });
+            EventDispatcher.Broadcast(new PlayerTookPileEvent() { NewCard = c, Player = pl, Pile = pi });
                  
             var takenPile = pi.ReplacePile(c);
             foreach (var card in takenPile)

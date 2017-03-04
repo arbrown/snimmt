@@ -54,13 +54,13 @@ namespace SnimmtReference
         /// This is the method that gets called when an AI is being summoned 
         /// to play a game. Its purpose is two-fold: to allow the AI to perform
         /// any perparations it needs in order to play, and also to allow the AI
-        /// to register to listen to certain game events with the game event manager.
+        /// to register to listen to certain game events with the game event dispatcher.
         /// </summary>
-        /// <param name="eventManager">
-        /// The EventManager allows an AI to register callbacks to perform
+        /// <param name="eventDispatcher">
+        /// The EventDispatcher allows an AI to register callbacks to perform
         /// when certain game events occur (for instance, a player reveals a card, etc...)
         /// </param>
-        public void Register(EventManager eventManager)
+        public void Register(EventDispatcher eventdispatcher)
         {
             // Rando makes his preparations, in this case, preparing a random number generator
             // and a log where he writes his observations about the game.
@@ -71,7 +71,7 @@ namespace SnimmtReference
             // Rando also registers a callback for the PlayerCardEvent.  When a player plays a card,
             // Rando's function will run.  In this case, Rando prints a snarky message to the console
             // and writes in his log about what he just observed.
-            eventManager.Register<PlayerCardEvent>(pce =>
+            eventdispatcher.Register<PlayerCardEvent>(pce =>
             {
                 Console.WriteLine($"Today's Lottery Numbers are {pce.Card.Number}, {pce.Card.BullValue}, and {rand.Next()}");
                 log.Append($"I observed \"{pce.Player} take the card \"{pce.Card}\"\"");

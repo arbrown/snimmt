@@ -62,15 +62,15 @@ namespace Snimmt
             var ai1 = (ISnimmtPlayer)Activator.CreateInstance(plugins.First());
             var ai2 = (ISnimmtPlayer)Activator.CreateInstance(plugins.First());
 
-            var game = new Game() { EventManager = new EventManager() };
+            var game = new Game() { EventDispatcher = new EventDispatcher() };
 
             var aiDict = new Dictionary<Player, ISnimmtPlayer>();
             var p1 = new Player($"{ai1} 1");
             var p2 = new Player($"{ai2} 2");
             aiDict.Add(p1, ai1);
-            ai1.Register(game.EventManager);
+            ai1.Register(game.EventDispatcher);
             aiDict.Add(p2, ai2);
-            ai2.Register(game.EventManager);
+            ai2.Register(game.EventDispatcher);
 
             game.AddPlayer(p1);
             game.AddPlayer(p2);

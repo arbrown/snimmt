@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SnimmtGame
 {
-    public class EventManager
+    public class EventDispatcher
     {
 
         private MultiValueDictionary<Type, Action<IEvent>> Events { get; set; } = new MultiValueDictionary<Type, Action<IEvent>>();

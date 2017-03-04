@@ -23,8 +23,8 @@ namespace SnimmtPlugin
         /// general preparations should occur.  The constructor
         /// should be pretty much empty.
         /// </summary>
-        /// <param name="eventManager">Game Manager object used to register for events</param>
-        void Register(EventManager eventManager);
+        /// <param name="eventDispatcher">Event Dispatcher object used to register for events</param>
+        void Register(EventDispatcher eventDispatcher);
 
         /// <summary>
         /// Receive the GameState object from the game control.
