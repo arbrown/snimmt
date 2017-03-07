@@ -45,12 +45,16 @@ namespace SnimmtGame
         // Add a player and deal him in off the top of the deck.
         public void AddPlayer(Player p)
         {
+            DealPlayerHand(p);
+            Players.Add(p);
+        }
+
+        public void DealPlayerHand(Player p)
+        {
             foreach (var i in Enumerable.Range(1, 10))
             {
                 p.Hand.AddCard(Deck.Draw());
             }
-            Players.Add(p);
-
         }
 
         //returns true if play valid, false if play impossible (must take pile instead)

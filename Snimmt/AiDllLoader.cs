@@ -17,6 +17,14 @@ namespace Snimmt
 
         public AiDllLoader()
         {
+            AIs = new Dictionary<string, Type>();
+            LoadAiDlls();
+        }
+
+        public AiDllLoader(string path)
+        {
+            AIs = new Dictionary<string, Type>();
+            SearchPath = path;
             LoadAiDlls();
         }
 
@@ -36,8 +44,6 @@ namespace Snimmt
             }
 
             var playerType = typeof(ISnimmtPlayer);
-
-            AIs = new Dictionary<string, Type>();
 
             foreach (var dll in dlls)
             {
@@ -70,16 +76,22 @@ namespace Snimmt
             }
         }
 
-        public void TryGetAi(string name, out ISnimmtPlayer ai)
+        public IEnumerable<string> GetNames()
+        {
+            return AIs.Keys;
+        }
+
+        public bool TryGetAi(string name, out ISnimmtPlayer ai)
         {
             if (AIs.TryGetValue(name, out Type type))
             {
                 ai = (ISnimmtPlayer)Activator.CreateInstance(type);
+                return true;
             }
-            else
-            {
-                throw new Exception($"AI '{name}' not loaded.");
-            }
+
+            ai = null;
+            return false;
+
         }
     }
 }
