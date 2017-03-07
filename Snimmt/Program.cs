@@ -10,8 +10,23 @@ namespace Snimmt
 {
     class Program
     {
+        private static bool ListAvailableAIs { get; set; } = false;
+
+        private static IList<string> SelectedAIs { get; set; }
+
+        private static int GamesToPlay { get; set; } = 1;
+
+        private static int Verbosity { get; set; } = 0;
+
+        private static string DllPath { get; set; } = "./";
+
+
+
+
         static void Main(string[] args)
         {
+            ParseCommandLineOptions(args);
+
             var dllPaths = Directory.GetFiles(".", "*.dll");
 
             var dlls = new List<Assembly>();
@@ -119,6 +134,83 @@ namespace Snimmt
 
             game.ScoreRound();
 
+        }
+
+        private static void ParseCommandLineOptions(string[] args)
+        {
+            var exe = AppDomain.CurrentDomain.FriendlyName;
+            for (var i = 0; i<args.Length; i++)
+            {
+                var arg = args[i];
+                switch (arg)
+                {
+                    case "-l":
+                    case "--list":
+                        ListAvailableAIs = true;
+                        break;
+
+                    case "-v":
+                    case "--verbose":
+                        Verbosity = 1;
+                        if (args.Length > i+1)
+                        {
+                            //peek to see if verbosity specified
+                            var nextArg = args[i + 1];
+                            int verbosityLevel;
+                            if (int.TryParse(nextArg, out verbosityLevel))
+                            {
+                                Verbosity = verbosityLevel;
+                                i++;
+                            }
+                        }
+                        break;
+                    case "-g":
+                    case "--games":
+                        if (args.Length > i+1)
+                        {
+                            var nextArg = args[i + 1];
+                            int games;
+                            if (int.TryParse(nextArg, out games))
+                            {
+                                GamesToPlay = games;
+                                i++;
+                            }
+                        }
+                        break;
+                    case "-ai":
+                        SelectedAIs = new List<string>();
+                        while (args.Length > i+1)
+                        {
+                            var nextArg = args[i + 1];
+                            if (!nextArg.StartsWith("-"))
+                            {
+                                SelectedAIs.Add(nextArg);
+                                i++;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        break;
+                    case "--path":
+                    case "-p":
+                        if (args.Length > i + 1)
+                        {
+                            var nextArg = args[i + 1];
+                            if (Directory.Exists(nextArg))
+                            {
+                                DllPath = nextArg;
+                                i++;
+                            }
+                        }
+                        break;
+
+
+                    default:
+                        continue;
+                }
+            }
         }
     }
 }
