@@ -27,55 +27,11 @@ namespace Snimmt
         {
             ParseCommandLineOptions(args);
 
-            var dllPaths = Directory.GetFiles(".", "*.dll");
+            var AiDllLoader = new AiDllLoader() { SearchPath = DllPath};
 
-            var dlls = new List<Assembly>();
-
-            foreach (var file in dllPaths)
-            {
-                var an = AssemblyName.GetAssemblyName(file);
-                var dll = Assembly.Load(an);
-                dlls.Add(dll);
-            }
-
-            var playerType = typeof(ISnimmtPlayer);
-            var plugins = new List<Type>();
-            foreach (var dll in dlls)
-            {
-                if (dll != null)
-                {
-                    var types = dll.GetTypes();
-                    foreach (var type in types)
-                    {
-                        if (type.IsInterface || type.IsAbstract)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            if (type.GetInterface(playerType.FullName) != null)
-                            {
-                                plugins.Add(type);
-                            }
-                        }
-                    }
-                }
-            }
-
-            var AIs = new List<ISnimmtPlayer>();
-
-            foreach (var type in plugins)
-            {
-                // Instantiate plugins here.
-                ISnimmtPlayer ai = (ISnimmtPlayer)Activator.CreateInstance(type);
-                AIs.Add(ai);
-            }
-
-
-            // For now, just take the first guy, and play it against itself
-
-            var ai1 = (ISnimmtPlayer)Activator.CreateInstance(plugins.First());
-            var ai2 = (ISnimmtPlayer)Activator.CreateInstance(plugins.First());
+            ISnimmtPlayer ai1, ai2;
+            AiDllLoader.TryGetAi("Rando", out ai1);
+            AiDllLoader.TryGetAi("Rando", out ai2);
 
             var game = new Game() { EventDispatcher = new EventDispatcher() };
 
